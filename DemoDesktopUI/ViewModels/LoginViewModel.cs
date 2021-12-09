@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DemoDesktopUI.Library.API;
 
 namespace DemoDesktopUI.ViewModels
 {
@@ -38,6 +39,33 @@ namespace DemoDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanLogIn);
             }
         }
+       
+        public bool IsErrorVisible
+        {
+            get 
+            {
+                bool output = false;
+                if (ErrorMessage?.Length > 0)
+                {
+                    output = true; 
+                }
+                return output; 
+            }
+        
+        }
+
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set 
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(() => IsErrorVisible);
+                NotifyOfPropertyChange(() => ErrorMessage); 
+            }
+        }
 
         public bool CanLogIn
         {
@@ -50,7 +78,6 @@ namespace DemoDesktopUI.ViewModels
                 }
 
                 return output;
-
             }
         }
 
@@ -59,15 +86,14 @@ namespace DemoDesktopUI.ViewModels
             try
             {
                 var result = await _apiHelper.Authenticate(UserName, Password);
-                if(result != null)
-                {
-                    Console.WriteLine();
-                }
+                ErrorMessage = null;
+
+                // Capture info about User
+                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.Message;  
             }
            
         }
