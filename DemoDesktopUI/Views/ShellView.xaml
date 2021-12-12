@@ -5,18 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoDesktopUI.Views"
         mc:Ignorable="d" FontSize="18"
-        Title="ShellView" Height="450" Width="800">
+        Title="ShellView" Height="600" Width="1000">
     <DockPanel>
         <Menu DockPanel.Dock="Top"  FontSize="18">
             <MenuItem Header="_File">
-                
+
             </MenuItem>
             <MenuItem Header="_Account">
                 <MenuItem x:Name="LoginScreen" Header="_Login" />
+                <MenuItem x:Name="SalesScreen" Header="_Point of Sales" />
             </MenuItem>
         </Menu>
         <Grid>
-            <ContentControl x:Name="ActiveItem" Margin="5" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="91*"/>
+            </Grid.ColumnDefinitions>
+            <ContentControl x:Name="ActiveItem" Margin="20 5 20 20" Grid.ColumnSpan="2" />
         </Grid>
     </DockPanel>
 </Window>

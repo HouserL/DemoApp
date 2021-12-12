@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DemoDesktopUI.Views"
-             mc:Ignorable="d" Background="White" FontSize="18"
-             d:DesignHeight="425" d:DesignWidth="800">
+             mc:Ignorable="d" FontSize="18"
+             d:DesignHeight="425" d:DesignWidth="800" d:Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -28,8 +28,9 @@
         <!-- Error Message row-->
         <TextBlock x:Name="ErrorMessage" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                    Margin="0 0 0 20" Foreground="Red" HorizontalAlignment="Center"
-                   MaxWidth="300" TextWrapping="Wrap" FontSize="14"
-                   Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" 
+                   MaxWidth="445" TextWrapping="Wrap" FontSize="14"
+                   Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                   d:Text="Testing asdasdasda asdfjdsklajfkldsafjdskljfkldsajfkldsjfklajd skl fj" d:Visibility="Visible"
                    />
 
         <!-- User Name row-->
@@ -37,14 +38,14 @@
             Username:
         </TextBlock>
         <TextBox x:Name="UserName" Grid.Row="2" Grid.Column="2" 
-                 MinWidth="350" Margin="0 0 0 10"/>
+                 MinWidth="350" Margin="5 0 5 10"/>
 
         <!-- Password row -->
         <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 0 0 10">
             Password:
         </TextBlock>
         <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" 
-                 MinWidth="350" Margin="0 0 5 20"/>
+                 MinWidth="350" Margin="5 0 5 20"/>
         <!-- Login row -->
         <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Padding="30 5"
                 HorizontalAlignment="Center" x:Name="LogIn">

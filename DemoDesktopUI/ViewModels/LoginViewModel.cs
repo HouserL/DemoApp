@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoDesktopUI.Library.API;
+using DemoDesktopUI.EventModels;
 
 namespace DemoDesktopUI.ViewModels
 {
@@ -14,8 +15,10 @@ namespace DemoDesktopUI.ViewModels
         private string _userName;
         private string _password;
         private IAPIHelper _apiHelper;
-        public LoginViewModel(IAPIHelper apiHelper)
+        private IEventAggregator _events;
+        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
+            _events = events;
             _apiHelper = apiHelper;
         }
 
@@ -90,6 +93,8 @@ namespace DemoDesktopUI.ViewModels
 
                 // Capture info about User
                 await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+
+                await _events.PublishOnUIThreadAsync(new LogOnEvent());
             }
             catch (Exception ex)
             {
