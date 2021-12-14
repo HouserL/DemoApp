@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace DemoDataManager.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ProductController : ApiController
     {
         [HttpGet]

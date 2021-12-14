@@ -24,5 +24,6 @@ namespace DemoDesktopUI.Views
         {
             InitializeComponent();
         }
+
     }
 }

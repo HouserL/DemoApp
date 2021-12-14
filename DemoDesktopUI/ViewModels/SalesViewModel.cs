@@ -41,10 +41,23 @@ namespace DemoDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => Products);
             }
         }
+        private ProductModel _selectedProduct;
 
-        private BindingList<ProductModel> _cart;
+        public ProductModel SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set 
+            { 
+                _selectedProduct = value;
+                NotifyOfPropertyChange(() => SelectedProduct);
+                NotifyOfPropertyChange(() => CanAddToCart);
+            }
+        }
 
-        public BindingList<ProductModel> Cart
+
+        private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
+
+        public BindingList<CartItemModel> Cart
         {
             get { return _cart; }
             set 
@@ -55,7 +68,7 @@ namespace DemoDesktopUI.ViewModels
         }
 
 
-        private int _itemQuantity;
+        private int _itemQuantity = 1;
 
         public int ItemQuantity
         {
@@ -64,6 +77,7 @@ namespace DemoDesktopUI.ViewModels
             { 
                 _itemQuantity = value;
                 NotifyOfPropertyChange(() => ItemQuantity);
+                NotifyOfPropertyChange(() => CanAddToCart);
             }
         }
 
@@ -71,8 +85,13 @@ namespace DemoDesktopUI.ViewModels
         {
             get
             {
+                decimal subTotal = 0;
+                foreach (var item in Cart)
+                {
+                    subTotal += (item.Product.RetailPrice * item.QuantityInCart);
+                }
                 // Replace with calculation
-                return "$0.00";
+                return subTotal.ToString("C");
             }
         }
         public string Tax
@@ -97,8 +116,10 @@ namespace DemoDesktopUI.ViewModels
             get
             {
                 bool output = false;
-               // Make sure something is selected
-               // Make sure there is an item quantity
+                if (ItemQuantity > 0 && SelectedProduct?.QuantityInStock >= ItemQuantity)
+                {
+                    output = true;
+                }
 
                 return output;
             }
@@ -106,10 +127,30 @@ namespace DemoDesktopUI.ViewModels
 
         public void AddToCart()
         {
+            CartItemModel existingItem = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
+            if (existingItem != null)
+            {
+                existingItem.QuantityInCart += ItemQuantity;
+                Cart.ResetItem(Cart.IndexOf(existingItem));
+            }
+            else
+            {
+                CartItemModel item = new CartItemModel
+                {
+                    Product = SelectedProduct,
+                    QuantityInCart = ItemQuantity,
+                };
+                Cart.Add(item);
+            }
+            
+            SelectedProduct.QuantityInStock -= ItemQuantity;
+            ItemQuantity = 1;
+            NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Cart);
 
         }
 
-        public bool CanRemoveToCart
+        public bool CanRemoveFromCart
         {
             get
             {
@@ -124,6 +165,8 @@ namespace DemoDesktopUI.ViewModels
         public void RemoveFromCart()
         {
 
+
+            NotifyOfPropertyChange(() => SubTotal);
         }
 
         public bool CanCheckOut
