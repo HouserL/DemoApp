@@ -3,7 +3,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [Id], [ProductName], [Description], [RetailPrice], [QuantityInStock]
+	SELECT [Id], [ProductName], [Description], [RetailPrice], [QuantityInStock], [IsLowTaxable], [IsHighTaxable]
 	FROM [dbo].[Product]
 	ORDER BY [ProductName]
 END

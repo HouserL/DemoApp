@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using DemoDesktopUI.Helpers;
 using DemoDesktopUI.Library.API;
+using DemoDesktopUI.Library.Helpers;
 using DemoDesktopUI.Library.Models;
 using DemoDesktopUI.ViewModels;
 using System;
@@ -36,6 +37,7 @@ namespace DemoDesktopUI
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IAPIHelper, APIHelper>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>();
                 
             
