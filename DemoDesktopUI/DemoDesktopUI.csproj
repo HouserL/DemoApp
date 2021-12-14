@@ -140,6 +140,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DemoDataManager.Library\DemoDataManager.Library.csproj">
+      <Project>{1547471B-2837-4A35-9791-5B17F7BBA842}</Project>
+      <Name>DemoDataManager.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DemoDesktopUI.Library\DemoDesktopUI.Library.csproj">
       <Project>{ded2ccc1-22f5-4055-8d71-5cdc452938a0}</Project>
       <Name>DemoDesktopUI.Library</Name>

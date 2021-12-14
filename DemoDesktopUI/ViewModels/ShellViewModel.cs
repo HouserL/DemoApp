@@ -34,7 +34,12 @@ namespace DemoDesktopUI.ViewModels
 
         public void SalesScreen()
         {
-           // ActivateItemAsync(_salesVM);            
+            ActivateItemAsync(_salesVM);            
+        }
+
+        public void LoginScreen()
+        {
+            ActivateItemAsync(_container.GetInstance<LoginViewModel>());
         }
     }
 }

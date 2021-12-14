@@ -2,9 +2,9 @@
 	@Id NVARCHAR(128)
 AS
 BEGIN
-	SET NOCOUNT on;
+	SET NOCOUNT ON;
 
-	SELECT Id, FirstName, LastName, EmailAddress, CreateDate
+	SELECT [Id], [FirstName], [LastName], [EmailAddress], [CreateDate]
 	FROM [dbo].[User] 
-	WHERE Id = @Id
+	WHERE [Id] = @Id
 END
