@@ -19,5 +19,14 @@ namespace DemoDataManager.Library.DataAccess
             return output;
         }
 
+        public ProductModel GetProductById(int item)
+        {
+            SQLDataAccess sql = new SQLDataAccess();
+
+            var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetById", item, "DemoData").FirstOrDefault();
+
+            return output;
+        }
+
     }
 }

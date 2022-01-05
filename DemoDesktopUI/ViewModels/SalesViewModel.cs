@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
-using DemoDataManager.Library.Models;
 using DemoDesktopUI.Library.API;
 using DemoDesktopUI.Library.Helpers;
+using DemoDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

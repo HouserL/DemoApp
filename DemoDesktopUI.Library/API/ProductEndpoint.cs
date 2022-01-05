@@ -1,4 +1,4 @@
-﻿using DemoDataManager.Library.Models;
+﻿using DemoDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
