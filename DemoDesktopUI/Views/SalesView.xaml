@@ -32,11 +32,26 @@
         <!-- Column 0-->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="0"/>
 
-        <ListBox x:Name="Products" Grid.Row="2" Grid.Column="0"
+        <ListBox x:Name="Products" Grid.Row="2" Grid.Column="0"  d:ItemsSource="{d:SampleData ItemCount=5}"
                  MinHeight="200" MinWidth="150" SelectedItem="{Binding SelectedProduct}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding ProductName}" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding ProductName}" d:Text="Fluff Bath Towels"/>
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Price: " FontSize="14"/>
+                                <TextBlock Text="{Binding RetailPrice, StringFormat='{}{0:C}'}" FontSize="14"  
+                                           d:Text="1000.00"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 0 0 0" HorizontalAlignment="Right">
+                                <TextBlock Text="Qty: " FontSize="14" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding QuantityInStock}" FontSize="14"
+                                           TextAlignment="Right" MinWidth="30"
+                                           d:Text="100" />
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -47,8 +62,8 @@
             <TextBlock Text="Quantity"/>
             <TextBox x:Name="ItemQuantity" MinWidth="100" Margin="0 0 0 10" />
             <Button x:Name="AddToCart" Content="Add To Cart" Margin="0 0 0 30" 
-                    Padding="5" />
-            <Button x:Name="RemoveFromCart" Content="Remove From Cart" 
+                    Padding="5"/>
+            <Button x:Name="RemoveFromCart" Content="Remove From Cart" Margin="0 0 0 30" 
                     Padding="5" />
 
         </StackPanel>
@@ -56,7 +71,8 @@
         <!--Column 2-->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="2"/>
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="2"
-                 MinHeight="200" MinWidth="150" d:ItemsSource="{d:SampleData ItemCount=5}">
+                 MinHeight="200" MinWidth="150" d:ItemsSource="{d:SampleData ItemCount=5}"
+                 SelectedItem="{Binding SelectedCartItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayText}" />

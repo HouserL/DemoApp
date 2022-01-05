@@ -22,7 +22,7 @@ namespace DemoDesktopUI.ViewModels
             _container = container;
 
             _events.SubscribeOnPublishedThread(this);
-            ActivateItemAsync(_container.GetInstance<LoginViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>());
         }
 
         public Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ namespace DemoDesktopUI.ViewModels
 
         public void LoginScreen()
         {
-            ActivateItemAsync(_container.GetInstance<LoginViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>());
         }
     }
 }

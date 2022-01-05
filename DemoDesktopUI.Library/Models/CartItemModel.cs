@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoDataManager.Library.Models
+namespace DemoDesktopUI.Library.Models
 {
     public class CartItemModel
     {
         public ProductModel Product { get; set; }
         public int QuantityInCart { get; set; }
-        public string DisplayText 
+        public string DisplayText
         {
             get
             {

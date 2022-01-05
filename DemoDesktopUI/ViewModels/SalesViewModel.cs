@@ -57,6 +57,20 @@ namespace DemoDesktopUI.ViewModels
             }
         }
 
+        private CartItemModel _selectedCartItem;
+
+        public CartItemModel SelectedCartItem
+        {
+            get { return _selectedCartItem; }
+            set 
+            { 
+                _selectedCartItem = value;
+                NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
+            }
+        }
+
+
 
         private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
 
@@ -110,21 +124,32 @@ namespace DemoDesktopUI.ViewModels
         }
         private decimal CalculateTax()
         {
-            decimal taxAmount = 0;
+            decimal highTaxAmount = 0;
+            decimal lowTaxAmount = 0;
             decimal highTaxRate = _configHelper.GetHighTaxRate()/100;
             decimal lowTaxRate = _configHelper.GetLowTaxRate()/100;
-            foreach (var item in Cart)
-            {
-                if (item.Product.IsHighTaxable)
-                {
-                    taxAmount += (item.Product.RetailPrice * item.QuantityInCart * highTaxRate);
-                }
-                else if (item.Product.IsLowTaxable)
-                {
-                    taxAmount += (item.Product.RetailPrice * item.QuantityInCart * lowTaxRate);
-                }
-            }
-            return taxAmount;
+
+            highTaxAmount = Cart
+                .Where(x => x.Product.IsHighTaxable)
+                .Sum(x => x.Product.RetailPrice * x.QuantityInCart * highTaxRate);
+
+            lowTaxAmount = Cart    
+                .Where(x => x.Product.IsLowTaxable)
+                .Sum(x => x.Product.RetailPrice * x.QuantityInCart * lowTaxRate);
+
+            //foreach (var item in Cart)
+            //{
+            //    if (item.Product.IsHighTaxable)
+            //    {
+            //        taxAmount += (item.Product.RetailPrice * item.QuantityInCart * highTaxRate);
+            //    }
+            //    else if (item.Product.IsLowTaxable)
+            //    {
+            //        taxAmount += (item.Product.RetailPrice * item.QuantityInCart * lowTaxRate);
+            //    }
+            //}
+
+            return (highTaxAmount + lowTaxAmount);
         }
         public string Total
         {
@@ -171,7 +196,7 @@ namespace DemoDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
-
+            NotifyOfPropertyChange(() => CanCheckOut);
 
         }
 
@@ -182,17 +207,21 @@ namespace DemoDesktopUI.ViewModels
                 bool output = false;
                 // Make sure something is selected
                 // Make sure there is an item quantity
-
+                if (SelectedCartItem != null)
+                {
+                    output = true;
+                }
                 return output;
             }
         }
 
         public void RemoveFromCart()
         {
-
+            Cart.Remove(SelectedCartItem);
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanCheckOut
@@ -201,14 +230,17 @@ namespace DemoDesktopUI.ViewModels
             {
                 bool output = false;
                 // Make sure something is in cart
-
+                if (Cart.Count > 0)
+                {
+                    output = true;
+                }
                 return output;
             }
         }
 
         public void CheckOut()
         {
-
+            Console.WriteLine("Test");
         }
     }
 }
