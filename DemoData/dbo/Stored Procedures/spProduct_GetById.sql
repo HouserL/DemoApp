@@ -6,5 +6,5 @@ BEGIN
 	
 	SELECT [Id], [ProductName], [Description], [RetailPrice], [QuantityInStock], [IsLowTaxable], [IsHighTaxable]
 	FROM [dbo].[Product]
-	WHERE [Id] = @Id
+	WHERE [Id] = @Id;
 END

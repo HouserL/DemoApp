@@ -18,8 +18,8 @@ namespace DemoDataManager.Library.DataAccess
             // Start filling in the save detail models we will save to the DB
             List<SaleDetailDBModel> saleDetails = new List<SaleDetailDBModel>();
             ProductData products = new ProductData();
-            var highTaxRate = ConfigHelper.GetHighTaxRate();
-            var lowTaxRate = ConfigHelper.GetLowTaxRate();  
+            var highTaxRate = ConfigHelper.GetHighTaxRate() / 100;
+            var lowTaxRate = ConfigHelper.GetLowTaxRate() / 100;  
             foreach (var item in saleInfo.SaleDetails)
             {
                 var detail = new SaleDetailDBModel
@@ -39,11 +39,11 @@ namespace DemoDataManager.Library.DataAccess
 
                 if (productInfo.IsHighTaxable)
                 {
-                    detail.Tax = (detail.Tax * highTaxRate / 100);
+                    detail.Tax = (detail.PurchasePrice * highTaxRate);
                 }
                 else if (productInfo.IsLowTaxable)
                 {
-                    detail.Tax = (detail.Tax * lowTaxRate / 100);
+                    detail.Tax = (detail.PurchasePrice * lowTaxRate);
                 }
 
                 saleDetails.Add(detail);
@@ -66,7 +66,7 @@ namespace DemoDataManager.Library.DataAccess
             sql.SaveData("dbo.spSale_Insert", sale, "DemoData");
 
             // Get the ID for the sale model 
-
+            sale.Id = sql.LoadData<int, dynamic>("dbo.spSale_Lookup", new { CashierId = sale.CashierId, SaleDate = sale.SaleDate }, "DemoData").FirstOrDefault();
 
             // Finish filling in the sale detail models
             foreach (var item in saleDetails)

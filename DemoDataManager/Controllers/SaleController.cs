@@ -18,14 +18,8 @@ namespace DemoDataManager.Controllers
         {
             SaleData data = new SaleData();
             string userId = RequestContext.Principal.Identity.GetUserId();
+            
             data.SaveSale(sale, userId);
         }
-
-        //public List<ProductModel> Get()
-        //{
-        //    ProductData data = new ProductData();
-
-        //    return data.GetProducts();
-        //}
     }
 }

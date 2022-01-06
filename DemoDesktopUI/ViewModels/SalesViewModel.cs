@@ -15,9 +15,11 @@ namespace DemoDesktopUI.ViewModels
     {
         IProductEndpoint _productEndpoint;
         IConfigHelper _configHelper;
+        ISaleEndPoint _saleEndPoint;
         
-        public SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper)
+        public SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndPoint saleEndPoint)
         {
+            _saleEndPoint = saleEndPoint;
             _configHelper = configHelper;   
             _productEndpoint = productEndpoint;                 
         }
@@ -238,9 +240,20 @@ namespace DemoDesktopUI.ViewModels
             }
         }
 
-        public void CheckOut()
+        public async Task CheckOut()
         {
-            Console.WriteLine("Test");
+            SaleModel sale = new SaleModel();
+
+            foreach (var item in Cart)
+            {
+                sale.SaleDetails.Add(new SaleDetailModel
+                {
+                    ProductId = item.Product.Id,
+                    Quantitiy = item.QuantityInCart
+                });
+            }
+
+            await _saleEndPoint.PostSale(sale);
         }
     }
 }
